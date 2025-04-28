@@ -1,42 +1,43 @@
 # Agenda Pet
 
-**Agenda Pet** é um aplicativo Flutter voltado para petshops, clínicas veterinárias e profissionais autônomos da área pet. Com ele, é possível realizar o **cadastro de pets e seus tutores**, **agendar atendimentos** e **controlar o financeiro** da empresa.
+**Agenda Pet** is a Flutter application designed for pet shops, veterinary clinics, and independent pet professionals.  
+With it, you can **register pets and their owners**, **schedule appointments**, and **manage the business's finances**.
 
-## Funcionalidades
+## Features
 
-- **Cadastro de Pets**
-  - Informações do animal (nome, raça, idade, etc.)
-  - Dados do tutor
+- **Pet Registration**
+  - Animal information (name, breed, age, etc.)
+  - Owner details
 
--  **Agenda**
-  - Agendamentos de banhos, tosas, consultas e outros serviços
-  - Visualização por dia/semana/mês
+- **Scheduling**
+  - Appointments for baths, grooming, consultations, and other services
+  - View by day/week/month
 
--  **Financeiro**
-  - Controle de entradas e saídas
-  - Relatórios de faturamento
+- **Financial Management**
+  - Control of income and expenses
+  - Revenue reports
 
-## Tecnologias Utilizadas
+## Technologies Used
 
 - **Flutter**
 - **Dart**
-- **Firebase** (ainda sendo implementado)
-- **SQLite** (ainda sendo implementado)
+- **Firebase** (currently being implemented)
+- **SQLite** (currently being implemented)
 
-## Observações
-- O aplicativo está em desenvolvimento e será atualizado semanalmente
+## Notes
+- The app is under development and will be updated weekly.
 
-## Como Rodar o Projeto
+## How to Run the Project
 
 ```bash
-# Clone o repositório
+# Clone the repository
 git clone https://github.com/SeuUsuario/agenda_pet.git
 
-# Acesse a pasta do projeto
+# Navigate to the project folder
 cd agenda_pet
 
-# Instale as dependências
-flsutter pub get
+# Install dependencies
+flutter pub get
 
-# Execute o projeto
+# Run the app
 flutter run
