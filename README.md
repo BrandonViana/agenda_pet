@@ -1,16 +1,43 @@
-# projetopet
+# Agenda Pet
 
-A new Flutter project.
+**Agenda Pet** is a Flutter application designed for pet shops, veterinary clinics, and independent pet professionals.  
+With it, you can **register pets and their owners**, **schedule appointments**, and **manage the business's finances**.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **Pet Registration**
+  - Animal information (name, breed, age, etc.)
+  - Owner details
 
-A few resources to get you started if this is your first Flutter project:
+- **Scheduling**
+  - Appointments for baths, grooming, consultations, and other services
+  - View by day/week/month
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Financial Management**
+  - Control of income and expenses
+  - Revenue reports
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Technologies Used
+
+- **Flutter**
+- **Dart**
+- **Firebase** (currently being implemented)
+- **SQLite** (currently being implemented)
+
+## Notes
+- The app is under development and will be updated weekly.
+
+## How to Run the Project
+
+```bash
+# Clone the repository
+git clone https://github.com/SeuUsuario/agenda_pet.git
+
+# Navigate to the project folder
+cd agenda_pet
+
+# Install dependencies
+flutter pub get
+
+# Run the app
+flutter run
