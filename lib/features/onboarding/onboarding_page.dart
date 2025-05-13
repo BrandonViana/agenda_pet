@@ -26,11 +26,11 @@ class OnboardingPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const SizedBox(height: 15.0),
+                const SizedBox(height: 25.0),
                 Text(
                   "Agenda Pet",
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.sloganText.copyWith(
+                  style: AppTextStyles.textoAll.copyWith(
                     color: AppColors.white,
                     fontSize: 20,
                   ),
@@ -46,7 +46,7 @@ class OnboardingPage extends StatelessWidget {
                 Text(
                   "Agende, Cadastre, Cuide!",
                   textAlign: TextAlign.center,
-                  style: AppTextStyles.simpleText.copyWith(
+                  style: AppTextStyles.textoAll.copyWith(
                     color: AppColors.white,
                     fontSize: 35,
                   ),

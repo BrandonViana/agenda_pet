@@ -36,7 +36,7 @@ class PrimaryButton extends StatelessWidget {
           child: Align(
             child: Text(
               text,
-              style: AppTextStyles.simpleText.copyWith(color: AppColors.black),
+              style: AppTextStyles.textoAll.copyWith(color: AppColors.black),
             ),
           ),
         ),

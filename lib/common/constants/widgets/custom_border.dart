@@ -8,20 +8,32 @@ class CustomBorder {
     TextStyle? floatingLabelStyle,
     Color? borderColor,
   }) {
-    final color = borderColor ?? AppColors.blueBorder;
     return InputDecoration(
       labelText: label,
-      labelStyle: labelStyle,
-      floatingLabelStyle: floatingLabelStyle,
+      labelStyle:
+          labelStyle ??
+          TextStyle(
+            fontFamily: 'OpenSanst',
+            fontSize: 15,
+            color: AppColors.white,
+          ),
+      floatingLabelStyle:
+          floatingLabelStyle ??
+          TextStyle(
+            fontFamily: 'OpenSanst',
+            fontSize: 15,
+            color: AppColors.white,
+            fontWeight: FontWeight.bold,
+          ),
       filled: true,
-      fillColor: AppColors.white,
+      fillColor: Colors.transparent,
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: color),
+        borderSide: BorderSide(color: AppColors.white),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide(color: color, width: 2),
+        borderSide: BorderSide(color: AppColors.white, width: 2),
       ),
     );
   }

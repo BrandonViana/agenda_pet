@@ -6,6 +6,7 @@ import 'package:projetopet/common/constants/widgets/password_field.dart';
 import 'package:projetopet/common/constants/widgets/second_button.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:projetopet/features/Login/login_page.dart';
+import 'package:projetopet/servicos/autenticacao_servicos.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -15,14 +16,28 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  bool _agreeToPrivacyPolicy = false;
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool isChecked = false;
+
+  final AutenticacaoServicos _autenServico = AutenticacaoServicos();
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        alignment: Alignment.topCenter,
-        decoration: const BoxDecoration(color: AppColors.white),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: AppColors.babyblueGradient,
+            stops: const [0.0, 0.5, 1.0],
+          ),
+        ),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
@@ -50,8 +65,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       Center(
                         child: Text(
                           'Criar Conta',
-                          style: AppTextStyles.simpleText.copyWith(
-                            color: AppColors.blueBorder,
+                          style: AppTextStyles.textoAll.copyWith(
+                            color: AppColors.white,
                             fontSize: 35,
                           ),
                         ),
@@ -59,85 +74,159 @@ class _RegisterPageState extends State<RegisterPage> {
                     ],
                   ),
                   const SizedBox(height: 30),
-                  TextFormField(
-                    decoration: CustomBorder.build(
-                      "Nome",
-                    ).copyWith(hintText: "Roberto Pêra"),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration: CustomBorder.build(
-                      'Telefone',
-                    ).copyWith(hintText: "(xx) xxxx-xxxx"),
-                  ),
-                  const SizedBox(height: 20),
-                  TextFormField(
-                    decoration: CustomBorder.build(
-                      'Email',
-                    ).copyWith(hintText: "email@email.com"),
-                  ),
-                  const SizedBox(height: 20),
-                  PasswordField(label: 'Senha'),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
+                  Form(
+                    key: _formKey,
+                    child: Column(
                       children: [
-                        Checkbox(
-                          value: _agreeToPrivacyPolicy,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              _agreeToPrivacyPolicy = value ?? false;
-                            });
+                        TextFormField(
+                          controller: _nameController,
+                          decoration: CustomBorder.build("Nome"),
+                          keyboardType: TextInputType.name,
+                          style: TextStyle(color: AppColors.white),
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return "O nome não pode ser vazio";
+                            }
+                            if (RegExp(
+                              r'[^a-zA-ZáéíóúàèìòùâêîôûãõçÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛÃÕÇ ]',
+                            ).hasMatch(value)) {
+                              return 'Não pode conter números nem caracteres especiais';
+                            }
+                            return null;
                           },
-                          activeColor: AppColors.blueBorder,
                         ),
-                        Expanded(
-                          child: Text(
-                            'Concorda com a Política de Privacidade?',
-                            style: AppTextStyles.sloganText.copyWith(
-                              fontSize: 14,
-                            ),
-                          ),
+                        const SizedBox(height: 20),
+                        TextFormField(
+                          controller: _emailController,
+                          decoration: CustomBorder.build('Email'),
+                          keyboardType: TextInputType.name,
+                          style: TextStyle(color: AppColors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'O email não pode ser vazio';
+                            }
+                            if (!RegExp(
+                              r'^[^@]+@[^@]+\.[^@]+',
+                            ).hasMatch(value)) {
+                              return 'Digite um email válido';
+                            }
+                            return null;
+                          },
                         ),
+                        const SizedBox(height: 20),
+                        PasswordField(
+                          label: 'Senha',
+                          controller: _passwordController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'A senha não pode ser vazia';
+                            }
+                            if (value.length < 8) {
+                              return 'A senha deve ter pelo menos 8 caracteres';
+                            }
+                            if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                              return 'A senha deve conter pelo menos 1 letra maiúscula';
+                            }
+                            if (!RegExp(
+                              r'[!@#\$%^&*(),.?":{}|<>]',
+                            ).hasMatch(value)) {
+                              return 'A senha deve conter pelo menos 1 caractere especial';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 20),
                       ],
                     ),
+                  ),
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: isChecked,
+                        onChanged: (bool? newValue) {
+                          setState(() {
+                            isChecked = newValue!;
+                          });
+                        },
+                        fillColor: WidgetStateProperty.resolveWith<Color>(
+                          (Set<WidgetState> states) => AppColors.blueBorder,
+                        ),
+                        checkColor: AppColors.white,
+                        side: BorderSide(color: AppColors.white, width: 2),
+                      ),
+                      Expanded(
+                        child: Text(
+                          'Concordo com a Política de Privacidade',
+                          style: AppTextStyles.simpleText.copyWith(
+                            fontSize: 14,
+                            color: AppColors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: SecondButton(
                       text: "Registrar",
-                      onPressed: () {
-                        if (_agreeToPrivacyPolicy) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => LoginPage(),
-                            ),
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Você precisa aceitar a Política de Privacidade.',
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          if (isChecked) {
+                            try {
+                              await _autenServico.userRegistration(
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                                name: _nameController.text,
+                              );
+                              Navigator.pushReplacement(
+                                // ignore: use_build_context_synchronously
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginPage(),
+                                ),
+                              );
+                            } catch (e) {
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Erro: $e")),
+                              );
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  'Você precisa aceitar a Política de Privacidade.',
+                                ),
                               ),
-                            ),
-                          );
+                            );
+                          }
                         }
                       },
                     ),
                   ),
-                  SizedBox(height: 15),
                   Align(
                     alignment: Alignment.center,
-                    child: Column(
-                      children: [
-                        SignInButton(
+                    child: Text(
+                      "Ou",
+                      style: AppTextStyles.simpleText.copyWith(
+                        color: AppColors.white,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 40,
+                        child: SignInButton(
                           Buttons.GoogleDark,
                           text: "Entrar com Google",
                           onPressed: () {},
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ],

@@ -4,8 +4,15 @@ import 'package:projetopet/common/constants/widgets/custom_border.dart';
 
 class PasswordField extends StatefulWidget {
   final String label;
+  final FormFieldValidator<String>? validator;
+  final TextEditingController? controller;
 
-  const PasswordField({super.key, required this.label});
+  const PasswordField({
+    super.key,
+    required this.label,
+    this.validator,
+    this.controller,
+  });
 
   @override
   State<PasswordField> createState() => _PasswordFieldState();
@@ -20,17 +27,20 @@ class _PasswordFieldState extends State<PasswordField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
+      controller: widget.controller,
       obscureText: _obscureText,
       decoration: CustomBorder.build(widget.label).copyWith(
         suffixIcon: IconButton(
           icon: Icon(
             _obscureText ? Icons.visibility_off : Icons.visibility,
-            color: AppColors.blueBorder,
+            color: AppColors.white,
           ),
           onPressed: _toggleVisibility,
         ),
       ),
+      style: const TextStyle(color: AppColors.white),
+      validator: widget.validator,
     );
   }
 }
