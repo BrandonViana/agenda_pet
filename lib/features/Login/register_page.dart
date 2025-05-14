@@ -6,7 +6,6 @@ import 'package:projetopet/common/constants/widgets/password_field.dart';
 import 'package:projetopet/common/constants/widgets/second_button.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:projetopet/features/Login/login_page.dart';
-import 'package:projetopet/servicos/autenticacao_servicos.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -21,9 +20,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool isChecked = false;
-
-  final AutenticacaoServicos _autenServico = AutenticacaoServicos();
-
 
   @override
   Widget build(BuildContext context) {
@@ -172,25 +168,13 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           if (isChecked) {
-                            try {
-                              await _autenServico.userRegistration(
-                                email: _emailController.text,
-                                password: _passwordController.text,
-                                name: _nameController.text,
-                              );
-                              Navigator.pushReplacement(
-                                // ignore: use_build_context_synchronously
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => LoginPage(),
-                                ),
-                              );
-                            } catch (e) {
-                              // ignore: use_build_context_synchronously
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text("Erro: $e")),
-                              );
-                            }
+                            // Aqui você pode adicionar lógica local de registro se quiser
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginPage(),
+                              ),
+                            );
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
