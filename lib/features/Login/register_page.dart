@@ -5,7 +5,7 @@ import 'package:projetopet/common/constants/widgets/custom_border.dart';
 import 'package:projetopet/common/constants/widgets/password_field.dart';
 import 'package:projetopet/common/constants/widgets/second_button.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:projetopet/features/Login/login_page.dart';
+import 'package:projetopet/servicos/authentication_sercvices.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -20,6 +20,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool isChecked = false;
+
+  final AuthenticationService _autenservi = AuthenticationService();
 
   @override
   Widget build(BuildContext context) {
@@ -166,23 +168,18 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: SecondButton(
                       text: "Registrar",
                       onPressed: () async {
+                        String name = _emailController.text;
+                        String email = _emailController.text;
+                        String password = _passwordController.text;
                         if (_formKey.currentState!.validate()) {
                           if (isChecked) {
-                            // Aqui você pode adicionar lógica local de registro se quiser
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginPage(),
-                              ),
-                            );
+                            print("Entrada Válidada:");
+                            print("Nome: ${_nameController.text}");
+                            print("Email: ${_emailController.text}");
+                            print("Senha: ${_passwordController.text}");
+                            _autenservi.registerUser(name: name, password: password, email: email);
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                  'Você precisa aceitar a Política de Privacidade.',
-                                ),
-                              ),
-                            );
+                            print("Form inválido.");
                           }
                         }
                       },
