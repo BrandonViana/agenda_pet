@@ -1,1 +1,5 @@
 android/java_pid22428.hprof filter=lfs diff=lfs merge=lfs -text
+*.dart linguist-language=Dart
+*.html linguist-language=ignore
+*.cpp linguist-language=ignore
+*.h linguist-language=ignore
